@@ -159,10 +159,13 @@ def arabToRoman(arab):
     return roman
 
 #test
-for i in range(1,3999):
-    if romanToArab(arabToRoman(i)) != i:
-        print("fallo en {}".format(i))
-        print(romanToArab(arabToRoman(i)))
-        print(arabToRoman(i))
+
+if __name__ == '__main__':
+
+    for i in range(1,3999):
+        if romanToArab(arabToRoman(i)) != i:
+            print("fallo en {}".format(i))
+            print(romanToArab(arabToRoman(i)))
+            print(arabToRoman(i))
 
 
