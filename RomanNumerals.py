@@ -111,8 +111,7 @@ def validateArab(arab):
         raise TypeError("{} no es un número entero".format(arab))
     if arab < 1:
         raise ValueError("{} no es un número mayor que cero".format(arab))
-    if arab >= 4000:
-        raise ValueError("{} es mayor de 3999".format(arab))
+
 
 def romanToArab(roman):
     validateRoman(roman)
@@ -128,13 +127,18 @@ def romanToArab(roman):
         i += 1
     return value
 
+
 def arabToRoman(arab):
     validateArab(arab)
     roman = ""
-    remaining = arab
+    if arab> 3999:
+        roman += "("
+        roman += arabToRoman(arab//1000)
+        arab = arab%1000
+        roman += ")"
     for i in (1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1):
-        times =  remaining // i
-        remaining = remaining % i
+        times =  arab // i
+        arab = arab % i
         roman += arabValues[i]*times
     return roman
 
