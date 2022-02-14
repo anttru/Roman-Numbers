@@ -112,6 +112,12 @@ def validateArab(arab):
     if arab < 1:
         raise ValueError("{} no es un número mayor que cero".format(arab))
 
+def romanToArray(roman):
+    if "(" in roman:
+        roman.split(")")
+        roman[0] = roman[0].split("(")[-1]
+    else:
+        return [roman]
 
 def romanToArab(roman):
     validateRoman(roman)
@@ -151,4 +157,4 @@ if __name__ == '__main__':
             print("fallo en {}".format(i))
             print(romanToArab(arabToRoman(i)))
             print(arabToRoman(i))
-        
+      
