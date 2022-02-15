@@ -1,4 +1,4 @@
-from RomanNumerals import arabToRoman, romanToArab
+from RomanNumerals import arabToRoman, romanArrayToArab
 
 class RomanNumber:
     def __init__(self, value):
@@ -6,7 +6,7 @@ class RomanNumber:
             self.roman = arabToRoman(value)
             self.arab = value
         elif isinstance(value, str):
-            self.arab = romanToArab(value)
+            self.arab = romanArrayToArab(value)
             self.roman = value
         else: 
             raise TypeError("La entrada ha de ser entero o un número romano")

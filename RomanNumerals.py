@@ -1,3 +1,6 @@
+from re import I
+
+
 romanPriority = {
     "M"  : 1,
     "CM" : 2,
@@ -27,7 +30,8 @@ romanValues = {
     "IX": 9,
     "V" : 5,
     "IV": 4,
-    "I" : 1
+    "I" : 1,
+    0  : 0
 }
 
 arabValues = {
@@ -56,6 +60,8 @@ def symbolExists(roman):
             raise RomanError("{} no es un símbolo romano".format(roman[i]))
 
 def currentAndNextSymbol(roman,i):
+    if len(roman) == 0:
+        return [0,None]
     if i == len(roman)-1:
         return (roman[-1], None)
     elif i == (len(roman)-2):
@@ -83,7 +89,7 @@ def checkOrder(roman):
         currentNext = currentAndNextSymbol(roman,i)
         currentSymbol = currentNext[0]
         nextSymbol = currentNext[1]
-        if nextSymbol == None:
+        if nextSymbol == None or currentSymbol == 0:
             return "ok"
         elif romanPriority[currentSymbol] > romanPriority[nextSymbol]:
             raise RomanError("{} no puede ir antes de {}".format(currentSymbol, nextSymbol))
@@ -113,11 +119,19 @@ def validateArab(arab):
         raise ValueError("{} no es un número mayor que cero".format(arab))
 
 def romanToArray(roman):
-    if "(" in roman:
-        roman.split(")")
-        roman[0] = roman[0].split("(")[-1]
-    else:
-        return [roman]
+    romanArray = roman.split(")")
+    romanArray[0] = romanArray[0].split("(")[-1]
+    return romanArray
+
+def romanArrayToArab(roman):
+    romanArray = romanToArray(roman)
+    total = 0
+    multiplier = 1000**(len(romanArray)-1)
+    for roman in romanArray:
+        value = romanToArab(roman) * multiplier
+        multiplier = multiplier//1000
+        total += value
+    return total
 
 def romanToArab(roman):
     validateRoman(roman)
@@ -152,9 +166,10 @@ def arabToRoman(arab):
 
 if __name__ == '__main__':
 
-    for i in range(1,4000):
-        if romanToArab(arabToRoman(i)) != i:
+    for i in range(4000001,4000002):
+        print("{}={}".format(i, arabToRoman(i)))
+        if romanArrayToArab(arabToRoman(i)) != i:
             print("fallo en {}".format(i))
-            print(romanToArab(arabToRoman(i)))
+            print(romanArrayToArab(arabToRoman(i)))
             print(arabToRoman(i))
-      
+            raise ValueError("Pete en {}".format(i))
