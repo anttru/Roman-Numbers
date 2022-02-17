@@ -1,5 +1,3 @@
-from re import I
-
 
 romanPriority = {
     "M"  : 1,
@@ -119,6 +117,17 @@ def validateArab(arab):
         raise ValueError("{} no es un número mayor que cero".format(arab))
 
 def romanToArray(roman):
+    parenthesisCounter = [0,0]
+    if roman == "":
+        raise TypeError("No puede ser una cadena vacía")
+    for char in roman:
+        if char == ("("):
+            parenthesisCounter[0] += 1
+        elif char == (")"):
+            parenthesisCounter[1] += 1
+    if parenthesisCounter[0] != parenthesisCounter[1]:
+        raise RomanError("No tiene un número igual de parentesis de apertura y cierre")
+
     romanArray = roman.split(")")
     romanArray[0] = romanArray[0].split("(")[-1]
     return romanArray
@@ -166,7 +175,7 @@ def arabToRoman(arab):
 
 if __name__ == '__main__':
 
-    for i in range(4000001,4000002):
+    for i in range(5641324654646,5641324654650):
         print("{}={}".format(i, arabToRoman(i)))
         if romanArrayToArab(arabToRoman(i)) != i:
             print("fallo en {}".format(i))
